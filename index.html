@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
+  <title>Dagboek</title>
+
+  <meta name="theme-color" content="#7BA88E" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)" />
+
+  <!-- iPhone: voelt als app op je beginscherm -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Dagboek" />
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+  <link rel="icon" href="./icon-192.png" />
+
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main id="view" class="view"><!-- gevuld door app.js --></main>
+
+  <nav class="tabbar" id="tabbar">
+    <button class="tab" data-tab="vandaag">
+      <span class="tab-emoji">☀️</span>
+      <span class="tab-label">Vandaag</span>
+    </button>
+    <button class="tab" data-tab="voortgang">
+      <span class="tab-emoji">📈</span>
+      <span class="tab-label">Voortgang</span>
+    </button>
+    <button class="tab" data-tab="wachtrij">
+      <span class="tab-emoji">🌱</span>
+      <span class="tab-label">Wachtrij</span>
+    </button>
+  </nav>
+
+  <script src="./app.js"></script>
+</body>
+</html>

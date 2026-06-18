@@ -203,7 +203,9 @@ Volgorde zo gekozen dat er zo snel mogelijk **data gaat stromen**.
   harde poort op de wachtrij (14 check-ins, onverliesbaar).
 - [ ] **Phase B** — export / "stuur naar Claude"-knop + JSON-back-up (realiseert de
   data→coach-loop zonder backend).
-- [ ] **Phase C** — deploy naar GitHub Pages → op de telefoon, data verzamelen.
+- [x] **Phase C** — deploy naar GitHub Pages → live op
+  https://offertespoeddakservice-source.github.io/dagboek/ (repo:
+  offertespoeddakservice-source/dagboek). Nu: op de telefoon zetten en data verzamelen.
 - [ ] **Phase D** — terugscrollen / dagen-terug invullen + weekoverzicht.
 - [ ] **Phase E** — Sheet-sync via Apps Script (data-als-brein).
 - [ ] **Phase F** — Coach-tab gevoed door Claude (eerst wekelijkse batch).

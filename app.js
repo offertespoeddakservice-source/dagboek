@@ -13,6 +13,7 @@ const DEFAULT_STATE = {
   log: {},               // 'JJJJ-MM-DD' -> { done, answer, label, extras }
   queue: [],             // geparkeerde kandidaat-gewoontes: [{id, text}]
   habits: [],            // toegevoegde (gestapelde) gewoontes: [{id, emoji, label}]
+  braindump: [],         // [{id, text, side: 'zorg'|'invloed'|null, date}]
   settings: { gateCheckins: 14 }, // onverliesbare drempel voor nieuwe habit
   promptSnoozedAt: null,
   seeded: false
@@ -117,7 +118,8 @@ function render() {
     t.classList.toggle('active', t.dataset.tab === activeTab));
   if (activeTab === 'vandaag') renderVandaag();
   else if (activeTab === 'voortgang') renderVoortgang();
-  else renderWachtrij();
+  else if (activeTab === 'wachtrij') renderWachtrij();
+  else renderBrein();
 }
 
 function greet() {
@@ -309,6 +311,76 @@ function renderWachtrij() {
   view.querySelector('[data-gate]').onchange = (e) => {
     state.settings.gateCheckins = Math.max(1, Math.min(365, Number(e.target.value) || 14)); save();
   };
+}
+
+function renderBrein() {
+  const items = state.braindump;
+  const unsorted = items.filter(i => !i.side);
+  const zorg = items.filter(i => i.side === 'zorg');
+  const invloed = items.filter(i => i.side === 'invloed');
+
+  let html = `<h1 class="page-title">Brain dump</h1>
+    <p class="lead">Schrijf op wat er door je hoofd maalt. Sorteer daarna elk ding:
+    kun je er zelf iets aan doen (<strong>invloed</strong>), of moet je het loslaten
+    (<strong>zorg</strong>)? Bijna alles is zorg — en dat is oké.</p>
+    <div class="add-row">
+      <input class="add-input" data-bd placeholder="Wat maalt er door je hoofd?" />
+      <button class="add-btn" data-bdadd>+</button>
+    </div>`;
+
+  if (unsorted.length) {
+    html += `<p class="section-title">Nog sorteren</p>`;
+    html += unsorted.map(i => `<div class="bd-card">
+      <span class="bd-text">${esc(i.text)}</span>
+      <div class="bd-actions">
+        <button class="chip" data-side="zorg" data-id="${i.id}">🌀 Zorg</button>
+        <button class="chip" data-side="invloed" data-id="${i.id}">🎯 Invloed</button>
+        <button class="icon-btn" data-bddel="${i.id}">✕</button>
+      </div></div>`).join('');
+  }
+
+  html += `<p class="section-title">🌀 Zorg — geen grip, mag je loslaten</p>`;
+  html += zorg.length
+    ? zorg.map(i => `<div class="queue-item"><span>${esc(i.text)}</span>
+        <button class="icon-btn" data-bddel="${i.id}">✕</button></div>`).join('')
+    : `<p class="empty">Nog niets losgelaten.</p>`;
+
+  html += `<p class="section-title">🎯 Invloed — hier kun jij wél iets</p>
+    <p class="note-hint" style="margin:-6px 2px 12px">Hier past eigenlijk maar één ding:
+    jij. Je gedachten, hoe je je dag indeelt, en vooral hóé je reageert.</p>`;
+  html += invloed.length
+    ? invloed.map(i => `<div class="active-item"><span>${esc(i.text)}</span>
+        <span style="display:flex;gap:6px;align-items:center">
+          <button class="mini-btn" data-bdq="${i.id}">→ Wachtrij</button>
+          <button class="icon-btn" data-bddel="${i.id}">✕</button>
+        </span></div>`).join('')
+    : `<p class="empty">Nog niets in jouw invloed gezet.</p>`;
+
+  view.innerHTML = html;
+
+  const input = view.querySelector('[data-bd]');
+  const submit = () => {
+    const t = input.value.trim();
+    if (!t) return;
+    state.braindump.unshift({ id: uid(), text: t, side: null, date: todayKey() });
+    save(); render();
+  };
+  view.querySelector('[data-bdadd]').onclick = submit;
+  input.onkeydown = (e) => { if (e.key === 'Enter') submit(); };
+  view.querySelectorAll('[data-side]').forEach(b => b.onclick = () => {
+    const it = state.braindump.find(x => x.id === b.dataset.id);
+    if (it) { it.side = b.dataset.side; save(); render(); }
+  });
+  view.querySelectorAll('[data-bddel]').forEach(b => b.onclick = () => {
+    state.braindump = state.braindump.filter(x => x.id !== b.dataset.bddel); save(); render();
+  });
+  view.querySelectorAll('[data-bdq]').forEach(b => b.onclick = () => {
+    const it = state.braindump.find(x => x.id === b.dataset.bdq);
+    if (!it) return;
+    state.queue.push({ id: uid(), text: it.text });
+    state.braindump = state.braindump.filter(x => x.id !== it.id);
+    save(); render();
+  });
 }
 
 function bind(sel, fn) { const el = view.querySelector(sel); if (el) fn(el); }

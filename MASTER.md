@@ -56,6 +56,11 @@ Concreet:
 - **Alles data-driven.** Beslissingen (welke pillar level 1 wordt, of een habit zin
   heeft, wanneer je een habit mág toevoegen, hoe habits ranken) volgen uit de
   verzamelde data — niet uit een opwelling. Daarom moet data eerst stromen.
+- **Saaie kern, rijk eromheen.** De homepage (*Vandaag*) en de pillars blijven saai,
+  minimaal en vast — dáár voorkomt minimalisme terugval. Het platform erómheen (brain
+  dump, kennisbank, coach, overzichten…) mág groeien. De rem geldt dus niet "geen
+  features", maar: **één feature per keer, elk afgemaakt en geverifieerd** — nooit 100
+  dingen tegelijk, nooit de dagelijkse reps overslaan. Alleen de pillars zijn permanent.
 
 ## 3. Het model: pillars & levels
 
@@ -134,9 +139,12 @@ Claude's analyse — belangrijk voor betrouwbare coaching.
 
 ## 6. Tabs in de app (UI)
 
-- **Nu:** Vandaag · Voortgang · Wachtrij.
+- **Nu:** Vandaag · Voortgang · Wachtrij · Brain dump.
 - **Later:** Coach · Kennisbank · Reminders/Ankers · Overzichten.
   (Voeg tabs pas toe als de bijbehorende fase klaar is — niet eerder.)
+- **Navigatie-grens:** *Vandaag* blijft de saaie kern. Bij 5+ tabs komt er een
+  **"Meer"-hub** voor de groeiende gereedschappen, zodat de onderbalk en de homepage
+  rustig blijven.
 
 ## 7. Ideeën-catalogus (alles; niets gaat verloren)
 
@@ -220,8 +228,8 @@ Volgorde zo gekozen dat er zo snel mogelijk **data gaat stromen**.
 - [x] **Phase C** — deploy naar GitHub Pages → live op
   https://offertespoeddakservice-source.github.io/dagboek/ (repo:
   offertespoeddakservice-source/dagboek). Nu: op de telefoon zetten en data verzamelen.
-- [ ] **Volgende feature-kandidaat** — Brain dump (invloed vs zorg, zie §7-J). Bewust
-  pas bouwen ná een paar dagen echte check-in-reps — niet als ontsnapping aan de reps.
+- [x] **Brain dump (invloed vs zorg)** — eigen tab, los van de saaie homepage. Dump +
+  sorteren in Zorg/Invloed; invloed-items kunnen naar de Wachtrij als kandidaat-habit.
 - [ ] **Phase D** — terugscrollen / dagen-terug invullen + weekoverzicht.
 - [ ] **Phase E** — Sheet-sync via Apps Script (data-als-brein).
 - [ ] **Phase F** — Coach-tab gevoed door Claude (eerst wekelijkse batch).
@@ -273,4 +281,7 @@ Elke fase = klein en op zichzelf bruikbaar. Niet vooruitlopen.
 - **2026-06-19** — Phase A gebouwd en geverifieerd: vaste dagboekvraag + tik-labels,
   veerkracht i.p.v. streak (totaal + 7-dagen-ritme + laatste 30 dagen + backfill via
   knop en tikbare kalender), harde poort (14 check-ins). Service worker omgezet naar
-  network-first zodat updates op de telefoon doorkomen.
+  network-first zodat updates op de telefoon doorkomen. Gedeployed naar GitHub Pages.
+- **2026-06-19** — Principe verscherpt (saaie kern, rijk eromheen; één feature per
+  keer). Brain dump-tab (invloed vs zorg) gebouwd: dump → sorteren in Zorg/Invloed,
+  invloed-items naar de Wachtrij. Homepage bewust ongemoeid gelaten.

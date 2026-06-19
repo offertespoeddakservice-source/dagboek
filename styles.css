@@ -256,6 +256,14 @@ body {
 
 .cal-cell.clickable { cursor: pointer; }
 
+/* ---------- Brain dump ---------- */
+.bd-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 14px 16px; margin-top: 10px;
+}
+.bd-text { display: block; font-size: 16px; margin-bottom: 12px; }
+.bd-actions { display: flex; gap: 8px; align-items: center; }
+
 /* ---------- Tabbalk ---------- */
 .tabbar {
   position: fixed;

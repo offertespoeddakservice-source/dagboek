@@ -193,6 +193,20 @@ Claude's analyse — belangrijk voor betrouwbare coaching.
 - Eén-knops export + JSON-back-up (localStorage kan gewist worden).
 - Privacy-laag: lokaal-only markering.
 
+### J. Brain dump (invloed vs zorg)
+De dichotomie-van-controle als oefening tegen overdenken/angst.
+- Eén-tik vanaf *Vandaag* ("Hoofd vol? Brain dump") opent een vrij tekstveld: schrijf
+  alles op wat door je hoofd maalt.
+- Splits elk item in twee bakjes: **Zorg** (geen grip — nieuws, social media, wat
+  anderen doen) vs **Invloed** (eigenlijk alleen jezelf — je gedachten, self-talk, hoe
+  je je dag indeelt, en vooral hóé je reageert).
+- De inzicht-boodschap zit in de UI: de invloed-kant is bewust klein. Rustige toon,
+  geen oordeel.
+- **Data-waarde:** terugkerende zorgen → input voor welke pillar level 1 verdient
+  (coach telt ze op). Een "invloed"-item kun je vrijblijvend naar de **Wachtrij**
+  sturen als kandidaat-habit ("hier kan ik wél iets mee").
+- Minimaal houden: het is een dump + sorteren, geen project. Geen verplichte velden.
+
 ## 8. Bouw-roadmap (gefaseerd — één voor één)
 
 Volgorde zo gekozen dat er zo snel mogelijk **data gaat stromen**.
@@ -206,6 +220,8 @@ Volgorde zo gekozen dat er zo snel mogelijk **data gaat stromen**.
 - [x] **Phase C** — deploy naar GitHub Pages → live op
   https://offertespoeddakservice-source.github.io/dagboek/ (repo:
   offertespoeddakservice-source/dagboek). Nu: op de telefoon zetten en data verzamelen.
+- [ ] **Volgende feature-kandidaat** — Brain dump (invloed vs zorg, zie §7-J). Bewust
+  pas bouwen ná een paar dagen echte check-in-reps — niet als ontsnapping aan de reps.
 - [ ] **Phase D** — terugscrollen / dagen-terug invullen + weekoverzicht.
 - [ ] **Phase E** — Sheet-sync via Apps Script (data-als-brein).
 - [ ] **Phase F** — Coach-tab gevoed door Claude (eerst wekelijkse batch).

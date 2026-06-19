@@ -79,9 +79,11 @@ Cruciaal onderscheid (door Rens scherpgesteld 2026-06-19):
   klein en stabiel blijft. Welke meespeler een pillar verdient, wordt door data gestuurd
   (waar heeft hij het meeste last van + lage effort). De coach maakt dat zichtbaar.
 
-> **App-mismatch (te fixen):** nu gate't de Wachtrij élk toevoegen ("Activeer" zit op
-> slot tot 14 check-ins). Dat blokkeert ook meespelen — moet zo: meespelen vrij &
-> ongated, poort alleen op een aparte actie "vastzetten als pillar".
+> **Geïmplementeerd (2026-06-19):** Wachtrij → "Doe mee" voegt vrij een meespeler toe
+> (ongated). Op een meespeler: "Vastzetten als pillar" (gated tot 14 check-ins). Vaste
+> pillars verschijnen op *Vandaag* onder "Vaste pillars · elke dag" (📌). Meespelers
+> onder "Meespelen · vrij". Beide getrackt als zachte toggles — breken de streak/teller
+> niet (alleen de core-check-in telt; geen alles-of-niets).
 
 ## 4. Datamodel — "Sheet-als-brein"
 
@@ -254,8 +256,8 @@ Volgorde zo gekozen dat er zo snel mogelijk **data gaat stromen**.
   offertespoeddakservice-source/dagboek). Nu: op de telefoon zetten en data verzamelen.
 - [x] **Brain dump (invloed vs zorg)** — eigen tab, los van de saaie homepage. Dump +
   sorteren in Zorg/Invloed; invloed-items kunnen naar de Wachtrij als kandidaat-habit.
-- [ ] **Twee-tier model in de app** — meespelen vrij toevoegen/tracken (ongated), poort
-  alleen op aparte actie "vastzetten als pillar". (Fixt de huidige Wachtrij-mismatch.)
+- [x] **Twee-tier model in de app** — meespelen vrij toevoegen/tracken (ongated, "Doe
+  mee"); poort alleen op "Vastzetten als pillar". Pillars op Vandaag onder "Vaste pillars".
 - [ ] **Phase D** — terugscrollen / dagen-terug invullen + weekoverzicht.
 - [ ] **Phase E** — Sheet-sync via Apps Script (data-als-brein).
 - [ ] **Phase F** — Coach-tab gevoed door Claude (eerst wekelijkse batch).
@@ -311,3 +313,6 @@ Elke fase = klein en op zichzelf bruikbaar. Niet vooruitlopen.
 - **2026-06-19** — Principe verscherpt (saaie kern, rijk eromheen; één feature per
   keer). Brain dump-tab (invloed vs zorg) gebouwd: dump → sorteren in Zorg/Invloed,
   invloed-items naar de Wachtrij. Homepage bewust ongemoeid gelaten.
+- **2026-06-19** — Twee-tier model gebouwd & geverifieerd: meespelen vrij (ongated,
+  "Doe mee"), vastzetten als pillar gated (14 check-ins). Pillars/meespelers op Vandaag
+  als zachte toggles, breken de teller niet.

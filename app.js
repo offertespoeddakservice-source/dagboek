@@ -12,7 +12,8 @@ const LABELS = ['Gevoel', 'Gedachte', 'Probleem'];
 const DEFAULT_STATE = {
   log: {},               // 'JJJJ-MM-DD' -> { done, answer, label, extras }
   queue: [],             // geparkeerde kandidaat-gewoontes: [{id, text}]
-  habits: [],            // toegevoegde (gestapelde) gewoontes: [{id, emoji, label}]
+  habits: [],            // meespelen: vrij toegevoegd, optioneel, geen pillar
+  pillars: [],           // vastgezette extra pillars (na de poort) — vaste musts
   braindump: [],         // [{id, text, side: 'zorg'|'invloed'|null, date}]
   settings: { gateCheckins: 14 }, // onverliesbare drempel voor nieuwe habit
   promptSnoozedAt: null,
@@ -89,12 +90,19 @@ function removeFromQueue(id) {
   state.queue = state.queue.filter(q => q.id !== id);
   save(); render();
 }
-function promoteFromQueue(id) {
-  if (!gateOpen()) return; // harde poort
+function addMeespeler(id) { // vrij meespelen — geen poort
   const item = state.queue.find(q => q.id === id);
   if (!item) return;
   state.habits.push({ id: item.id, emoji: '🌱', label: item.text });
   state.queue = state.queue.filter(q => q.id !== id);
+  save(); render();
+}
+function lockAsPillar(id) { // vastzetten als vaste pillar — alleen na de poort
+  if (!gateOpen()) return;
+  const h = state.habits.find(x => x.id === id);
+  if (!h) return;
+  state.pillars.push({ id: h.id, emoji: '📌', label: h.label });
+  state.habits = state.habits.filter(x => x.id !== id);
   state.promptSnoozedAt = null;
   save(); render();
 }
@@ -102,12 +110,16 @@ function removeHabit(id) {
   state.habits = state.habits.filter(h => h.id !== id);
   save(); render();
 }
+function removePillar(id) {
+  state.pillars = state.pillars.filter(p => p.id !== id);
+  save(); render();
+}
 function snoozeOffer() { state.promptSnoozedAt = totalCheckins(); save(); render(); }
 
 /* Harde poort: pas een nieuwe habit toevoegen na de onverliesbare drempel. */
 function gateOpen() { return totalCheckins() >= state.settings.gateCheckins; }
 function shouldOffer() {
-  return gateOpen() && state.queue.length > 0 && state.promptSnoozedAt !== totalCheckins();
+  return gateOpen() && state.habits.length > 0 && state.promptSnoozedAt !== totalCheckins();
 }
 
 /* ---------------- render ---------------- */
@@ -157,9 +169,9 @@ function renderVandaag() {
   if (shouldOffer()) {
     html += `<div class="card offer">
       <p class="offer-title">Je hebt ${total} keer ingecheckt 🎉</p>
-      <p class="offer-text">Wil je één klein ding uit je wachtrij toevoegen? Nooit verplicht.</p>
-      ${state.queue.map(q => `<div class="offer-item"><span>${esc(q.text)}</span>
-        <button class="mini-btn" data-promote="${q.id}">Toevoegen</button></div>`).join('')}
+      <p class="offer-text">Genoeg basis. Wil je een meespeler vastzetten als vaste pillar? Nooit verplicht.</p>
+      ${state.habits.map(h => `<div class="offer-item"><span>${esc(h.label)}</span>
+        <button class="mini-btn" data-lock="${h.id}">Vastzetten</button></div>`).join('')}
       <button class="offer-dismiss" data-snooze>Niet nu</button>
     </div>`;
   }
@@ -185,9 +197,21 @@ function renderVandaag() {
     <p class="note-hint">Loggen zelf is de winst. Het label maakt je data later doorzoekbaar.</p>
   </div>`;
 
-  // gestapelde extra gewoontes — optioneel, breken niets
+  // extra vaste pillars (na de poort vastgezet) — musts, prominent
+  if (state.pillars.length) {
+    html += `<p class="section-title">Vaste pillars · elke dag</p><div class="card">`;
+    html += state.pillars.map(p => {
+      const on = !!e.extras[p.id];
+      return `<div class="extra-item ${on ? 'checked' : ''}" data-extra="${p.id}">
+        <span class="extra-check">${on ? '✓' : ''}</span>
+        <span class="extra-label">${p.emoji} ${esc(p.label)}</span></div>`;
+    }).join('');
+    html += `</div>`;
+  }
+
+  // meespelen — vrij toegevoegd, optioneel, breekt niets
   if (state.habits.length) {
-    html += `<p class="section-title">Erbij gestapeld</p><div class="card">`;
+    html += `<p class="section-title">Meespelen · vrij, breekt niets</p><div class="card">`;
     html += state.habits.map(h => {
       const on = !!e.extras[h.id];
       return `<div class="extra-item ${on ? 'checked' : ''}" data-extra="${h.id}">
@@ -208,8 +232,8 @@ function renderVandaag() {
     el.onclick = () => { const e2 = entry(todayKey()); e2.label = (e2.label === el.dataset.label ? '' : el.dataset.label); save(); render(); });
   view.querySelectorAll('[data-extra]').forEach(el =>
     el.onclick = () => { toggleExtra(el.dataset.extra); render(); });
-  view.querySelectorAll('[data-promote]').forEach(el =>
-    el.onclick = () => promoteFromQueue(el.dataset.promote));
+  view.querySelectorAll('[data-lock]').forEach(el =>
+    el.onclick = () => lockAsPillar(el.dataset.lock));
   bind('[data-snooze]', el => el.onclick = snoozeOffer);
 }
 
@@ -266,11 +290,11 @@ function renderWachtrij() {
   const need = Math.max(0, state.settings.gateCheckins - total);
 
   let html = `<h1 class="page-title">Wachtrij</h1>
-    <p class="lead">Parkeer hier ideeën voor later. Niets hoeft. Je stapelt pas iets erbij als jíj wilt — en pas na genoeg check-ins.</p>`;
+    <p class="lead">Parkeer hier ideeën. Je kunt ze altijd vrij laten <strong>meespelen</strong>. Iets <strong>vastzetten als pillar</strong> (een vaste must) mag pas na genoeg check-ins.</p>`;
 
   html += open
-    ? `<p class="gate-note open">Poort open 🌱 — je mag een habit toevoegen.</p>`
-    : `<p class="gate-note">Nog <strong>${need}</strong> keer inchecken voor je een nieuwe habit mag toevoegen (${total}/${state.settings.gateCheckins}). Bewust — eerst de basis stevig.</p>`;
+    ? `<p class="gate-note open">Poort open 🌱 — je mag nu een meespeler vastzetten als vaste pillar.</p>`
+    : `<p class="gate-note">Meespelen mag altijd. Een meespeler <strong>vastzetten als pillar</strong> kan na nog <strong>${need}</strong> keer inchecken (${total}/${state.settings.gateCheckins}).</p>`;
 
   html += `<div class="add-row">
       <input class="add-input" data-add placeholder="Nieuw idee parkeren…" />
@@ -280,7 +304,7 @@ function renderWachtrij() {
   if (state.queue.length) {
     html += state.queue.map(q => `<div class="queue-item"><span>${esc(q.text)}</span>
       <span style="display:flex;gap:6px;align-items:center">
-        <button class="mini-btn" data-promote="${q.id}" ${open ? '' : 'disabled'}>Activeer</button>
+        <button class="mini-btn" data-meedoe="${q.id}">Doe mee</button>
         <button class="icon-btn" data-del="${q.id}">✕</button>
       </span></div>`).join('');
   } else {
@@ -288,14 +312,23 @@ function renderWachtrij() {
   }
 
   if (state.habits.length) {
-    html += `<p class="section-title">Actief in je routine</p>`;
+    html += `<p class="section-title">Meespelen · vrij</p>`;
     html += state.habits.map(h => `<div class="active-item"><span>${h.emoji} ${esc(h.label)}</span>
-      <button class="icon-btn" data-rm="${h.id}">✕</button></div>`).join('');
+      <span style="display:flex;gap:6px;align-items:center">
+        <button class="mini-btn" data-lock="${h.id}" ${open ? '' : 'disabled'}>Vastzetten</button>
+        <button class="icon-btn" data-rm="${h.id}">✕</button>
+      </span></div>`).join('');
+  }
+
+  if (state.pillars.length) {
+    html += `<p class="section-title">Vaste pillars · elke dag</p>`;
+    html += state.pillars.map(p => `<div class="active-item"><span>${p.emoji} ${esc(p.label)}</span>
+      <button class="icon-btn" data-rmp="${p.id}">✕</button></div>`).join('');
   }
 
   html += `<p class="section-title">Instelling</p>
     <div class="card"><div class="setting-row">
-      <label>Aantal check-ins voor een nieuwe habit</label>
+      <label>Check-ins nodig om als pillar vast te zetten</label>
       <input class="num-input" type="number" min="1" max="365" value="${state.settings.gateCheckins}" data-gate />
     </div></div>`;
 
@@ -305,9 +338,11 @@ function renderWachtrij() {
   const submit = () => addToQueue(input.value);
   view.querySelector('[data-addbtn]').onclick = submit;
   input.onkeydown = (e) => { if (e.key === 'Enter') submit(); };
-  view.querySelectorAll('[data-promote]').forEach(b => b.onclick = () => promoteFromQueue(b.dataset.promote));
+  view.querySelectorAll('[data-meedoe]').forEach(b => b.onclick = () => addMeespeler(b.dataset.meedoe));
+  view.querySelectorAll('[data-lock]').forEach(b => b.onclick = () => lockAsPillar(b.dataset.lock));
   view.querySelectorAll('[data-del]').forEach(b => b.onclick = () => removeFromQueue(b.dataset.del));
   view.querySelectorAll('[data-rm]').forEach(b => b.onclick = () => removeHabit(b.dataset.rm));
+  view.querySelectorAll('[data-rmp]').forEach(b => b.onclick = () => removePillar(b.dataset.rmp));
   view.querySelector('[data-gate]').onchange = (e) => {
     state.settings.gateCheckins = Math.max(1, Math.min(365, Number(e.target.value) || 14)); save();
   };

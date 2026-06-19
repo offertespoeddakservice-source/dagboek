@@ -62,18 +62,26 @@ Concreet:
   features", maar: **één feature per keer, elk afgemaakt en geverifieerd** — nooit 100
   dingen tegelijk, nooit de dagelijkse reps overslaan. Alleen de pillars zijn permanent.
 
-## 3. Het model: pillars & levels
+## 3. Het model: twee tiers — pillar vs meespelen
 
-- **Level 1 = de permanente kern.** Verdwijnt nooit. Nu: *pillen pakken* +
-  *micro-dagboekvraag*.
-- Nieuwe habits stapelen er heel langzaam bij via de **Wachtrij**.
-- **Harde poort (data-driven rem):** je kunt pas een nieuwe habit toevoegen als je
-  een drempel aan check-ins hebt gehaald. Gebruik een **onverliesbare** maatstaf, niet
-  een fragiele reeks: standaard **14 keer ingecheckt** (of 14 van de laatste 21 dagen),
-  instelbaar. Eén gemiste dag zet je dus niet terug op nul — anders wordt de rem
-  dezelfde mentale weerstand die we bij de streak juist weghalen.
-- **Welke pillar level 1 verdient, wordt gestuurd door data** — welke thema's het
-  vaakst tegenzitten en correleren met slechte dagen. De coach maakt dat zichtbaar.
+Cruciaal onderscheid (door Rens scherpgesteld 2026-06-19):
+
+- **Pillar = de vaste kern.** Wat élke dag MOET, permanent, onaantastbaar. Nu: *pillen
+  pakken* + *micro-dagboekvraag*. Pillar 1 verdwijnt nooit.
+- **Meespelen = vrij experimenteren.** Rens mag altijd méér doen en tracken (bijv. ook
+  mediteren) — direct, zonder poort, zonder verplichting. Meespelers zijn optioneel,
+  breken niets, en zijn nadrukkelijk GEEN pillar.
+- **De poort geldt alléén voor het VASTZETTEN als nieuwe pillar**, niet voor meespelen.
+  Iets wordt pas een permanente must (pillar) na de onverliesbare drempel: standaard
+  **14 keer ingecheckt** (instelbaar), ongeacht hoeveel hij ondertussen al los doet.
+  Eén gemiste dag zet niets terug op nul.
+- **Waarom:** zo kan hij vrij uitproberen (hij wil graag meer doen) terwijl de kern
+  klein en stabiel blijft. Welke meespeler een pillar verdient, wordt door data gestuurd
+  (waar heeft hij het meeste last van + lage effort). De coach maakt dat zichtbaar.
+
+> **App-mismatch (te fixen):** nu gate't de Wachtrij élk toevoegen ("Activeer" zit op
+> slot tot 14 check-ins). Dat blokkeert ook meespelen — moet zo: meespelen vrij &
+> ongated, poort alleen op een aparte actie "vastzetten als pillar".
 
 ## 4. Datamodel — "Sheet-als-brein"
 
@@ -246,6 +254,8 @@ Volgorde zo gekozen dat er zo snel mogelijk **data gaat stromen**.
   offertespoeddakservice-source/dagboek). Nu: op de telefoon zetten en data verzamelen.
 - [x] **Brain dump (invloed vs zorg)** — eigen tab, los van de saaie homepage. Dump +
   sorteren in Zorg/Invloed; invloed-items kunnen naar de Wachtrij als kandidaat-habit.
+- [ ] **Twee-tier model in de app** — meespelen vrij toevoegen/tracken (ongated), poort
+  alleen op aparte actie "vastzetten als pillar". (Fixt de huidige Wachtrij-mismatch.)
 - [ ] **Phase D** — terugscrollen / dagen-terug invullen + weekoverzicht.
 - [ ] **Phase E** — Sheet-sync via Apps Script (data-als-brein).
 - [ ] **Phase F** — Coach-tab gevoed door Claude (eerst wekelijkse batch).

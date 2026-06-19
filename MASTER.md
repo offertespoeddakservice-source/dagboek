@@ -215,6 +215,22 @@ De dichotomie-van-controle als oefening tegen overdenken/angst.
   sturen als kandidaat-habit ("hier kan ik wél iets mee").
 - Minimaal houden: het is een dump + sorteren, geen project. Geen verplichte velden.
 
+**Uitbreidingen (backlog, één voor één):**
+- **Niet-binair (belangrijk).** Zorg/invloed is vaak geen of-of; Rens "scattert" omdat
+  de tweedeling een valse keuze opdringt. Betere splitsing per gedachte: **uitkomst**
+  (niet in zijn hand → loslaten) vs **zijn inzet/reactie** (wél in zijn hand → daar
+  richten). Bijna elke zorg heeft een invloed-sliver: zijn input + hoe hij reageert.
+  Voorbeeld dat hij gaf: "vindt die meid me leuk genoeg" → uitkomst = of zij kiest
+  (loslaten); inzet = contact maken, jezelf laten zien, reactie als het niks wordt.
+- **Claude-feedback op dumps.** Helpt splitsen bij twijfel, reframet, wijst het
+  invloed-stukje aan. Niveau 1 (nu, nul techniek): hij plakt een gedachte bij Claude →
+  feedback. Niveau 2 (later, echte bouwklus): Claude rechtstreeks in de app — vereist
+  API-sleutel (zijn Anthropic-account, kosten per call) achter een gratis proxy
+  (Cloudflare Worker). Niet "even snel erbij".
+- **Terugkerende gedachtes detecteren.** Komt een gedachte vaker terug → tellen en
+  tonen ("4× teruggekomen"). Kan **lokaal, zonder AI** → goede kandidaat-feature.
+  Signaal voor welke pillar aandacht nodig heeft.
+
 ## 8. Bouw-roadmap (gefaseerd — één voor één)
 
 Volgorde zo gekozen dat er zo snel mogelijk **data gaat stromen**.
